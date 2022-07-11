@@ -34,7 +34,7 @@ func (b *Booth) convertToDBStruct() *DBCircle {
 	s := &DBCircle{
 		Name:         b.Name,
 		Author:       b.Name,
-		Hall:         "青",
+		Hall:         "南",
 		Day:          0,
 		Block:        "",
 		Space:        strconv.Itoa(b.No),
@@ -90,10 +90,6 @@ func toDay(s string) int {
 		return 1
 	case "日":
 		return 2
-	case "月":
-		return 3
-	case "火":
-		return 4
 	default:
 		panic("unknown day")
 	}
@@ -135,18 +131,18 @@ func cutTwitterID(url null.String) null.String {
 func getLocationType(c *Circle) int {
 	num, _ := strconv.Atoi(strings.TrimRight(c.Space, "ab"))
 	switch c.Hall {
-	case "南":
+	case "東":
 		switch c.Block {
-		case "ア":
-			shutters := []int{27, 28, 29, 39, 40, 41}
+		case "A":
+			shutters := []int{4,5,6,15,16,17,28,29,30,45,46,47,75,76,77,86,87,88}
 			for _, v := range shutters {
 				if v == num {
 					return 2
 				}
 			}
 			return 1
-		case "ナ":
-			shutters := []int{26, 27, 28, 35, 36, 37}
+		case "シ":
+			shutters := []int{4,5,6,15,16,17,28,29,30,45,46,47,62,63,64,75,76,77,86,87,88}
 			for _, v := range shutters {
 				if v == num {
 					return 2
@@ -159,23 +155,15 @@ func getLocationType(c *Circle) int {
 	case "西":
 		switch c.Block {
 		case "あ":
-			shutters := []int{43, 44, 51, 52}
+			shutters := []int{33,34,41,42,49,50}
 			for _, v := range shutters {
 				if v == num {
 					return 2
 				}
 			}
 			return 1
-		case "れ":
-			shutters := []int{19, 20, 34, 35, 43, 44, 51, 52}
-			for _, v := range shutters {
-				if v == num {
-					return 2
-				}
-			}
-			return 1
-		case "Ａ":
-			shutters := []int{24, 25, 38, 39, 58, 59}
+		case "め":
+			shutters := []int{19,20,33,34,41,42,49,50}
 			for _, v := range shutters {
 				if v == num {
 					return 2

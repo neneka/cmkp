@@ -37,7 +37,7 @@ func init() {
 	viper.SetDefault("MYSQL_PASSWORD", "password")
 	viper.SetDefault("JWT_SECRET", "cmkpsupersecret")
 	viper.SetDefault("PORT", 3000)
-	viper.SetDefault("CMKP_EVENT_DAYS", 4)
+	viper.SetDefault("CMKP_EVENT_DAYS", 2)
 	viper.AutomaticEnv()
 }
 
