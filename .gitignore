@@ -74,3 +74,4 @@ cmkp
 static/
 vendor/
 .envrc
+scraper/scraper
