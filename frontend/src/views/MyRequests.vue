@@ -96,8 +96,6 @@ const getData = gql`
     day0: deadline(day: 0)
     day1: deadline(day: 1)
     day2: deadline(day: 2)
-    day3: deadline(day: 3)
-    day4: deadline(day: 4)
   }
 `
 
@@ -125,11 +123,9 @@ export default {
         day0: null,
         day1: null,
         day2: null,
-        day3: null,
-        day4: null
       },
       selectedDay: '全日',
-      daySelectItems: ['企業', '１日目', '２日目', '３日目', '４日目', '全日'],
+      daySelectItems: ['企業', '１日目', '２日目', '全日'],
       requestCircleMap: new Map(),
       dialog: false,
       priorityDialog: false,
@@ -210,10 +206,6 @@ export default {
           return 1
         case '２日目':
           return 2
-        case '３日目':
-          return 3
-        case '４日目':
-          return 4
         default:
           return null
       }
@@ -241,12 +233,6 @@ export default {
         case '2':
           this.selectedDay = '２日目'
           break
-        case '3':
-          this.selectedDay = '３日目'
-          break
-        case '4':
-          this.selectedDay = '４日目'
-          break
       }
     }
   },
@@ -259,10 +245,6 @@ export default {
           return dayjs(this.fetchData.day1).isBefore(dayjs())
         case 2:
           return dayjs(this.fetchData.day2).isBefore(dayjs())
-        case 3:
-          return dayjs(this.fetchData.day3).isBefore(dayjs())
-        case 4:
-          return dayjs(this.fetchData.day4).isBefore(dayjs())
         default:
           return true
       }

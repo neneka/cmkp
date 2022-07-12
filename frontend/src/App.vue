@@ -55,12 +55,6 @@
             v-list-tile(to="/planning/all-requests/2")
               v-list-tile-content
                 v-list-tile-title 2日目
-            v-list-tile(to="/planning/all-requests/3")
-              v-list-tile-content
-                v-list-tile-title 3日目
-            v-list-tile(to="/planning/all-requests/4")
-              v-list-tile-content
-                v-list-tile-title 4日目
           v-list-tile(to="/planning/all-request-notes")
             v-list-tile-action
               v-icon library_books
