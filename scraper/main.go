@@ -17,14 +17,16 @@ func init() {
 	viper.SetDefault("MYSQL_PASSWORD", "password")
 	viper.SetDefault("MYSQL_HOSTNAME", "localhost")
 	viper.SetDefault("MYSQL_DATABASE", "cmkp")
+	viper.SetDefault("MYSQL_PORT", "3306")
 }
 
 func main() {
 	db, err := sql.Open("mysql", fmt.Sprintf(
-		"%s:%s@tcp(%s:3306)/%s?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true",
+		"%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true",
 		viper.GetString("MYSQL_USERNAME"),
 		viper.GetString("MYSQL_PASSWORD"),
 		viper.GetString("MYSQL_HOSTNAME"),
+		viper.GetString("MYSQL_PORT"),
 		viper.GetString("MYSQL_DATABASE"),
 	))
 	if err != nil {
