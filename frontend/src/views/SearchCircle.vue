@@ -4,8 +4,6 @@
     v-layout(row wrap)
       v-checkbox(label="1日目" :value="1" v-model="filterDays")
       v-checkbox(label="2日目" :value="2" v-model="filterDays")
-      v-checkbox(label="3日目" :value="3" v-model="filterDays")
-      v-checkbox(label="4日目" :value="4" v-model="filterDays")
       v-checkbox(label="企業"  :value="0" v-model="filterDays")
     v-container(fluid grid-list-md)
       v-data-iterator(:items="circles" :loading="$apollo.queries.circles.loading" content-tag="v-layout" row wrap hide-actions)

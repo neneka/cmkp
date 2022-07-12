@@ -11,10 +11,6 @@
             date-time-picker(v-model="deadlines.day1" @input="updateDeadline(1, $event)")
             span 2日目
             date-time-picker(v-model="deadlines.day2" @input="updateDeadline(2, $event)")
-            span 3日目
-            date-time-picker(v-model="deadlines.day3" @input="updateDeadline(3, $event)")
-            span 4日目
-            date-time-picker(v-model="deadlines.day4" @input="updateDeadline(4, $event)")
 
 </template>
 
@@ -27,8 +23,6 @@ const getDeadlines = gql`
     day0: deadline(day: 0)
     day1: deadline(day: 1)
     day2: deadline(day: 2)
-    day3: deadline(day: 3)
-    day4: deadline(day: 4)
   }
 `
 
@@ -48,8 +42,7 @@ export default {
       deadlines: {
         day0: null,
         day1: null,
-        day2: null,
-        day3: null
+        day2: null
       }
     }
   },

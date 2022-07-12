@@ -27,7 +27,7 @@
                 v-layout(row wrap)
                   v-flex(xs12 sm4 md4 lg4)
                     circle-priority-list(title="企業" :circles="priorities[0]")
-                  v-flex(v-for="i in 4" xs12 sm4 md4 lg4 :key="i")
+                  v-flex(v-for="i in 2" xs12 sm4 md4 lg4 :key="i")
                     circle-priority-list(:title="`${i}日目`" :circles="priorities[i]")
           v-flex(d-flex xs12)
             v-card
@@ -37,7 +37,7 @@
                 v-btn(block depressed color="primary" @click="addItemDialog.open = true" append) リクエスト追加
                 v-radio-group(v-model="filter.day" row)
                   v-radio(:label="`企業(${requestedCircleCounts[0]})`" :value="0")
-                  v-radio(v-for="i in 4" :label="`${i}日目(${requestedCircleCounts[i]})`" :value="i" :key="i")
+                  v-radio(v-for="i in 2" :label="`${i}日目(${requestedCircleCounts[i]})`" :value="i" :key="i")
                 v-layout(row wrap)
                   v-flex(xs12 sm12 md6 lg4 v-for="circle in filteredRequests" :key="circle.id")
                     v-card
