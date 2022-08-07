@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-app
+  v-app(dark)
     v-navigation-drawer(persistent v-model="drawer" enable-resize-watcher fixed app temporary)
       v-list(v-if="loggedIn")
         v-list-tile
