@@ -133,7 +133,7 @@ func getLocationType(c *Circle) int {
 	switch c.Hall {
 	case "東":
 		switch c.Block {
-		case "A":
+		case "Ａ":
 			shutters := []int{4,5,6,15,16,17,28,29,30,45,46,47,75,76,77,86,87,88}
 			for _, v := range shutters {
 				if v == num {
