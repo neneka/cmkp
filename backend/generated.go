@@ -1603,6 +1603,7 @@ type Circle {
   requestingUser: [User!]!
   prioritized: [PriorityRank!]!
   updatedAt: Time!
+  hall_code: Int
 }
 
 type CircleMemo {

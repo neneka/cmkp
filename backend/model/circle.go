@@ -191,7 +191,7 @@ func GetRequestedCirclesByDay(ctx context.Context, day int) ([]*Circle, error) {
 	query := orm(ctx).
 		Model(Circle{}).
 		Joins("INNER JOIN (SELECT items.circle_id as id FROM items INNER JOIN user_request_items ON items.id = user_request_items.item_id GROUP BY items.circle_id) t ON circles.id = t.id").
-		Order("circles.hall").Order("circles.block").Order("circles.space")
+		Order("circles.hall_code").Order("circles.block").Order("circles.space")
 	if day > -1 {
 		query = query.Where("circles.day = ?", day)
 	}
@@ -222,7 +222,7 @@ func GetRequestedCirclesByUser(ctx context.Context, userID int) ([]*Circle, erro
 	query := orm(ctx).
 		Model(Circle{}).
 		Joins("INNER JOIN (SELECT items.circle_id as id FROM items INNER JOIN user_request_items ON items.id = user_request_items.item_id WHERE user_request_items.user_id = ? GROUP BY items.circle_id) t ON circles.id = t.id", userID).
-		Order("circles.day").Order("circles.hall").Order("circles.block").Order("circles.space")
+		Order("circles.day").Order("circles.hall_code").Order("circles.block").Order("circles.space")
 
 	if loader, ok := getCircleLoader(ctx); ok {
 		ids := make([]int, 0)
