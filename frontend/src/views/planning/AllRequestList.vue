@@ -113,7 +113,7 @@ export default {
   },
   computed: {
     filteredRequests: function () {
-      return this.fetchData.requestedCircles.filter(v => {
+      return this.fetchData.requestedCircles.sort((a, b) => a.locationString.localeCompare(b.locationString, 'ja', {numeric: true})).filter(v => {
         let ok = true
         switch (v.locationType) {
           case 0:
