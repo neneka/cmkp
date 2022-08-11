@@ -72,7 +72,8 @@
             v-btn(color="primary" :disabled="!addItemDialog.valid || addItemDialog.sending" :loading="addItemDialog.sending" @click="createRequest") 登録
         v-card-text
           v-form(v-model="addItemDialog.valid")
-            v-autocomplete(hide-no-data hide-selected :item-text="v => `${v.locationString} ${v.name} ${v.author}`" item-value="id" label="サークル選択" return-object placeholder="サークル名または作家名を入力" :items="searchCircles" v-model="addItemDialog.circle" :loading="$apollo.queries.searchCircles.loading" :search-input.sync="addItemDialog.query" clearable required :rules="[rules.required]")
+            v-text-field(v-model="addItemDialog.query" label="サークル名または作家名を入力" maxLength="100" counter persistent-hint :loading="$apollo.queries.searchCircles.loading")
+            v-autocomplete(hide-selected :item-text="v => `${v.locationString} ${v.name} ${v.author}`" item-value="id" label="サークル選択" return-object placeholder="サークル名または作家名を選択" :items="searchCircles" :loading="$apollo.queries.searchCircles.loading" clearable required :rules="[rules.required]")
             v-select(v-model="addItemDialog.selectedItem" :items="selectableCircleItems" label="商品名を選択" hint="希望の商品が無い場合は新規登録を選んでください" persistent-hint return-object single-line item-text="name" item-value="id" :loading="$apollo.queries.circleItems.loading")
             v-text-field(v-model="addItemDialog.name" label="商品名を入力" hint="曖昧な商品名を入力しないでください。また複数の商品を一つにまとめて登録しないでください。(OK：新刊A, NG：新刊AとB)" required :rules="[rules.required]" maxLength="100" counter persistent-hint :disabled="addItemDialog.selectedItem == null || !isNewItem")
             v-text-field(v-model.number="addItemDialog.price" label="単体価格" hint="決定していない場合は空欄にしてください" type="number" min="0" max="50000" persistent-hint :disabled="addItemDialog.selectedItem == null")
