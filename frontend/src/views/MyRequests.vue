@@ -160,7 +160,7 @@ export default {
         }
         c.requests.push(req)
       }
-      return result
+      return result.sort((a, b) => a.locationString.localeCompare(b.locationString, 'ja', { numeric: true }))
     },
     numEditable: function () {
       if (this.editTarget == null) {
