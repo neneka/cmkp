@@ -163,7 +163,12 @@ export default {
         }
         c.requests.push(req)
       }
-      return result.sort((a, b) => a.locationString.localeCompare(b.locationString, 'ja', { numeric: true }))
+      return result.sort((a, b) => {
+        if (a.day === b.day) {
+          return a.locationString.localeCompare(b.locationString, 'ja', { numeric: true })
+        }
+        return a.day - b.day
+      })
     },
     numEditable: function () {
       if (this.editTarget == null) {
@@ -407,7 +412,12 @@ export default {
             num,
             circle
           }
-        }).sort((a, b) => a.circle.locationString.localeCompare(b.circle.locationString, 'ja', { numeric: true }))
+        }).sort((a, b) => {
+          if (a.circle.day === b.circle.day) {
+            return a.circle.locationString.localeCompare(b.circle.locationString, 'ja', { numeric: true })
+          }
+          return a.circle.day - b.circle.day
+        })
         console.log(data)
         const blob = new Blob([JSON.stringify(data, undefined, 2)], { type: 'application/json' })
         const url = URL.createObjectURL(blob)
