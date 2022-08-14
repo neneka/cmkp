@@ -8,6 +8,9 @@
         v-select(label="日程" :items="daySelectItems" v-model="selectedDay")
         p 合計：{{ circleCount }}サークル, {{ totalCosts }}
         v-btn(color="primary" depressed block :disabled="isSelectedDayDeadlineOver" @click="openEditPriorityDialog") {{selectedDay !== '全日' ? `希望優先順位を設定する` : `日程を選択してください`}}
+    v-card
+      v-card-text
+        v-btn(color="primary" depressed block :disabled="!requestedCircles" @click="downloadRequests") リクエストのJSONをダウンロードする
 
     v-layout(row wrap)
       v-flex(xs12 sm12 md6 lg4 v-for="circle in filteredRequests" :key="circle.id")
@@ -122,7 +125,7 @@ export default {
         priorities4: [],
         day0: null,
         day1: null,
-        day2: null,
+        day2: null
       },
       selectedDay: '全日',
       daySelectItems: ['企業', '１日目', '２日目', '全日'],
@@ -391,6 +394,32 @@ export default {
         this.$bus.$emit('error')
       }
       this.sending = false
+    },
+    downloadRequests: function () {
+      try {
+        const data = this.fetchData.myRequests.map(({ item, num }) => {
+          const circle = window.structuredClone(this.fetchData.myRequestedCircles.find((circle) => circle.id === item.circleId))
+          delete circle.__typename
+          delete circle.id
+          return {
+            name: item.name,
+            price: item.price,
+            num,
+            circle
+          }
+        }).sort((a, b) => a.circle.locationString.localeCompare(b.circle.locationString, 'ja', { numeric: true }))
+        console.log(data)
+        const blob = new Blob([JSON.stringify(data, undefined, 2)], { type: 'application/json' })
+        const url = URL.createObjectURL(blob)
+        const button = document.createElement('a')
+        button.type = 'button'
+        button.download = 'cmkp-C100-requests.json'
+        button.href = url
+        button.click()
+      } catch (error) {
+        console.error(error)
+        alert('生成に失敗しました')
+      }
     }
   }
 }
