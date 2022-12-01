@@ -45,11 +45,8 @@ func main() {
 	// connect database
 	var err error
 	orm, err = gorm.Open("mysql", fmt.Sprintf(
-		"%s:%s@tcp(%s:3306)/%s?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true",
-		viper.GetString("MYSQL_USERNAME"),
-		viper.GetString("MYSQL_PASSWORD"),
-		viper.GetString("MYSQL_HOSTNAME"),
-		viper.GetString("MYSQL_DATABASE"),
+		"%s?charset=utf8mb4&collation=utf8mb4_general_ci&parseTime=true",
+		viper.GetString("MYSQL_DATABASE_DSN"),
 	))
 	if err != nil {
 		log.Fatal(err)
