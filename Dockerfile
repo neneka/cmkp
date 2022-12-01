@@ -1,4 +1,4 @@
-FROM golang:1.19.3-alpine AS server-build
+FROM golang:1.18.3-alpine AS server-build
 RUN apk add --no-cache git
 WORKDIR /go/src/github.com/wtks/cmkp/backend
 COPY ./backend/go.* ./
