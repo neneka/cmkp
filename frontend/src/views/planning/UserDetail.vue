@@ -42,7 +42,7 @@
                   v-flex(xs12 sm12 md6 lg4 v-for="circle in filteredRequests" :key="circle.id")
                     v-card
                       v-card-title.headline.lighten-4(:class="[{'orange': circle.locationType === 1}, {'red': circle.locationType === 2}, {'green': circle.locationType === 0}]")
-                        router-link(:to="`/circles/${circle.id}`" style="text-decoration: none;") {{ circle.locationString }} {{ circle.name }}
+                        router-link(:to="`/circles/${circle.id}`" style="text-decoration: none;") {{ circle.locationString }} {{ circle.name }} ({{ circle.author }})
                       v-divider
                       v-list
                         v-list-tile(v-for="item in circle.items" :key="item.id" @click="onItemClicked(circle, item)")
