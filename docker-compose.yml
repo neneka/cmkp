@@ -17,4 +17,4 @@ services:
     entrypoint: dockerize -timeout 60s -wait tcp://mysql:3306
     command: /cmkp
     ports:
-      - 5000:3000
+      - 5000:5000
