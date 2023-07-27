@@ -86,9 +86,9 @@ func (c *Circle) convertToDBStruct() *DBCircle {
 
 func toDay(s string) int {
 	switch s {
-	case "金":
-		return 1
 	case "土":
+		return 1
+	case "日":
 		return 2
 	default:
 		panic("unknown day")
