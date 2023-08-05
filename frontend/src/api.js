@@ -34,7 +34,15 @@ apolloClient.wsClient = wsClient
 let client
 const initClient = async (token) => {
   if (token) {
-    const decoded = jwtDecode(token)
+    let decoded
+    try {
+      decoded = jwtDecode(token)
+    } catch (e) {
+      console.error(e)
+      deleteToken()
+      await onLogout(apolloClient)
+      return
+    }
     store.commit('setUserId', parseInt(decoded.sub, 10))
     store.commit('setName', decoded.aud)
 
@@ -71,7 +79,11 @@ export default {
       },
       errorHandler (error) {
         // eslint-disable-next-line no-console
-        console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
+        console.error('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
+        if (error.message && error.message.includes('401')) {
+          deleteToken()
+          location.reload()
+        }
       }
     }),
   login: async (id, password) => {
