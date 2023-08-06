@@ -159,7 +159,7 @@ func SearchCircles(ctx context.Context, q string, days []int) ([]*Circle, error)
 	query := orm(ctx).
 		Model(Circle{}).
 		Limit(100).
-		Where("name LIKE ? OR author LIKE ?", tmp, tmp)
+		Where("name LIKE ? OR author LIKE ? OR twitter_id LIKE ? OR pixiv_id LIKE ? OR website LIKE ?", tmp, tmp, tmp, tmp, tmp)
 	if len(days) > 0 {
 		query = query.Where("day IN (?)", days)
 	}
