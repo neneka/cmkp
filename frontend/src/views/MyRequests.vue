@@ -50,12 +50,12 @@
         v-list
           v-list-tile(v-for="(p, i) of editPriorities" :key="p.id")
             v-list-tile-content
-              v-list-tile-title 第{{ i + 1 }}希望 {{ p.name }}
+              v-list-tile-title 第{{ i + 1 }}希望 {{ p.name }} ({{ p.author }})
             v-list-tile-action
               v-btn(icon @click="removePriorityCircle(i)")
                 v-icon clear
         v-card-text
-          v-select(v-model="editPrioritySelectCircle" :items="prioritySelectItems" placeholder="ここから選択" return-object item-text="name" item-value="id" append-outer-icon="add" @click:append-outer="appendPriorityCircle" :disabled="editPriorities.length >= 5")
+          v-select(v-model="editPrioritySelectCircle" :items="prioritySelectItems" placeholder="ここから選択" return-object :item-text="item => item.name + ' (' + item.author + ')'" item-value="id" append-outer-icon="add" @click:append-outer="appendPriorityCircle" :disabled="editPriorities.length >= 5")
 
         v-card-actions
           v-spacer
