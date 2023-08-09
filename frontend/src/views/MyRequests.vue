@@ -423,7 +423,7 @@ export default {
         const url = URL.createObjectURL(blob)
         const button = document.createElement('a')
         button.type = 'button'
-        button.download = 'cmkp-C100-requests.json'
+        button.download = `cmkp-requests-${dayjs().format()}.json`
         button.href = url
         button.click()
       } catch (error) {
