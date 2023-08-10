@@ -14,7 +14,7 @@
           v-flex(xs12 sm6 md4 lg3)
             v-card
               v-card-title
-                router-link(:to="`/planning/users/${user.id}`" class="headline") {{ user.displayName }} (@{{ user.name }})
+                router-link(:to="`/planning/users/${user.id}`" class="headline"  style="text-decoration: none;") {{ user.displayName }} (@{{ user.name }})
               v-card-text
                 v-chip(v-if="user.role === 'PLANNER'" color="green" text-color="white" small) プランナー
                 v-chip(v-else-if="user.role === 'ADMIN'" color="red" text-color="white" small) 管理人
