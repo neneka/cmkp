@@ -95,6 +95,11 @@ export default new Router({
               path: 'all-request-notes',
               name: '全リクエスト備考',
               component: () => import('./views/planning/AllRequestNote')
+            },
+            {
+              path: 'all-request-text',
+              name: '全リクエストテキスト',
+              component: () => import('./views/planning/AllRequestText')
             }
           ],
           beforeEnter: async function (to, from, next) {

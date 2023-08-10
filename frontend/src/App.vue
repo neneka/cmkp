@@ -60,6 +60,11 @@
               v-icon library_books
             v-list-tile-content
               v-list-tile-title 全リクエスト備考
+          v-list-tile(to="/planning/all-request-text")
+            v-list-tile-action
+              v-icon library_books
+            v-list-tile-content
+              v-list-tile-title 全リクエストテキスト
           v-list-tile(to="/planning/users")
             v-list-tile-action
               v-icon assignment_ind
