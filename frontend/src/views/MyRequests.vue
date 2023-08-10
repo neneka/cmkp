@@ -418,7 +418,6 @@ export default {
           }
           return a.circle.day - b.circle.day
         })
-        console.log(data)
         const blob = new Blob([JSON.stringify(data, undefined, 2)], { type: 'application/json' })
         const url = URL.createObjectURL(blob)
         const button = document.createElement('a')

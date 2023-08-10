@@ -137,7 +137,7 @@ export default {
       )
     },
     all: function () {
-      const a = [
+      return [
         ['企業', this.company],
         ['1日目 東 123ホール', this.day1_east_123],
         ['1日目 東 456ホール', this.day1_east_456],
@@ -149,8 +149,6 @@ export default {
         title,
         text: circles.map((circle) => this.genText(circle)).join('\n\n')
       }))
-      console.log(a)
-      return a
     }
   },
   methods: {
