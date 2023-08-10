@@ -14,7 +14,7 @@ v-container(fluid, grid-list-md)
                 @click.stop="download(section.title, section.text)"
               ) ダウンロード
               codeblock
-                pre {{ section.text }}
+                pre(style="overflow: auto") {{ section.text }}
 </template>
 
 <script>
