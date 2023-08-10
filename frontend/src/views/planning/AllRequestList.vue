@@ -12,12 +12,14 @@ v-container(fluid, grid-list-md)
     v-flex
       v-checkbox(label="シャッター", v-model="filter.shutter")
     v-flex
-      v-checkbox(label="除外", v-model="filter.exclude")
-    v-flex(xs12, sm12, v-if="filter.exclude")
+      v-checkbox(label="ユーザー限定", v-model="filter.only")
+    v-flex
+      v-checkbox(label="ユーザー除外", v-model="filter.exclude")
+    v-flex(xs12, sm12, v-if="filter.exclude || filter.only")
       v-select(
-        label="除外ユーザー",
+        label="ユーザー",
         :items="fetchUsers.users",
-        v-model="excludeUser",
+        v-model="selectedUser",
         item-text="displayName",
         item-id="id",
         persistent-hint,
@@ -157,9 +159,10 @@ export default {
         normal: true,
         wall: true,
         shutter: true,
-        exclude: false
+        exclude: false,
+        only: false
       },
-      excludeUser: null,
+      selectedUser: null,
       jumpSelectedCircle: null
     }
   },
@@ -201,17 +204,25 @@ export default {
               ok = this.filter.shutter
               break
           }
-          if (this.filter.exclude && this.excludeUser) {
-            let is_exclude_only = true
+          if (this.selectedUser) {
+            let is_only = true
             for (const item of v.requestedItems) {
               for (const request of item.requests) {
-                if (request.userId !== this.excludeUser.id) {
-                  is_exclude_only = false
+                if (request.userId !== this.selectedUser.id) {
+                  is_only = false
                 }
               }
             }
-            if (is_exclude_only) {
-              ok = false
+            if (this.filter.only) {
+              this.filter.exclude = false
+              if (!is_only) {
+                ok = false
+              }
+            } else if (this.filter.exclude) {
+              this.filter.only = false
+              if (is_only) {
+                ok = false
+              }
             }
           }
           return ok
