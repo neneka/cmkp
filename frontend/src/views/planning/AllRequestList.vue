@@ -13,6 +13,17 @@ v-container(fluid, grid-list-md)
       v-checkbox(label="シャッター", v-model="filter.shutter")
     v-flex
       v-checkbox(label="除外", v-model="filter.exclude")
+    v-flex(xs12, sm12, v-if="filter.exclude")
+      v-select(
+        label="除外ユーザー",
+        :items="fetchUsers.users",
+        v-model="excludeUser",
+        item-text="displayName",
+        item-id="id",
+        persistent-hint,
+        return-object,
+        single-line
+      )
     v-flex(xs12, sm12)
       v-autocomplete(
         label="ジャンプ",
@@ -117,6 +128,15 @@ const getData = gql`
   }
 `
 
+const getUsers = gql`
+  query {
+    users {
+      id
+      displayName
+    }
+  }
+`
+
 export default {
   name: 'AllRequestList',
   props: {
@@ -130,12 +150,16 @@ export default {
       fetchData: {
         requestedCircles: []
       },
+      fetchUsers: {
+        users: []
+      },
       filter: {
         normal: true,
         wall: true,
         shutter: true,
         exclude: false
       },
+      excludeUser: null,
       jumpSelectedCircle: null
     }
   },
@@ -148,6 +172,11 @@ export default {
           day: this.day
         }
       },
+      update: (data) => data
+    },
+    fetchUsers: {
+      query: getUsers,
+      fetchPolicy: 'cache-and-network',
       update: (data) => data
     }
   },
@@ -172,12 +201,11 @@ export default {
               ok = this.filter.shutter
               break
           }
-          // userId 12
-          if (this.filter.exclude) {
+          if (this.filter.exclude && this.excludeUser) {
             let is_exclude_only = true
             for (const item of v.requestedItems) {
               for (const request of item.requests) {
-                if (request.userId !== 12) {
+                if (request.userId !== this.excludeUser.id) {
                   is_exclude_only = false
                 }
               }
