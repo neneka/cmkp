@@ -134,7 +134,7 @@ export default {
         normal: true,
         wall: true,
         shutter: true,
-        exclude: true
+        exclude: false
       },
       jumpSelectedCircle: null
     }
