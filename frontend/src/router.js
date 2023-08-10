@@ -103,11 +103,12 @@ export default new Router({
             }
           ],
           beforeEnter: async function (to, from, next) {
-            if (store.getters.isPlanner) {
-              next()
-            } else {
-              next('/')
-            }
+            next()
+            // if (store.getters.isPlanner) {
+            //   next()
+            // } else {
+            //   next('/')
+            // }
           }
         },
         {
