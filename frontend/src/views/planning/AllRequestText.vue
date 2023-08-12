@@ -5,6 +5,7 @@ v-container(fluid, grid-list-md)
       template(v-for="section in all")
         details
           summary.headline {{ section.title }}
+            span(style="font-size: 80%; margin-left: 1rem") ({{ section.count }} サークル)
           v-card
             v-card-text
               v-btn(depressed, small, @click.stop="copy(section.text)") コピー
@@ -147,7 +148,8 @@ export default {
         ['2日目 西', this.day2_west]
       ].map(([title, circles]) => ({
         title,
-        text: circles.map((circle) => this.genText(circle)).join('\n\n')
+        text: circles.map((circle) => this.genText(circle)).join('\n\n'),
+        count: circles.length
       }))
     }
   },
