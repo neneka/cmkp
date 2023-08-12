@@ -188,7 +188,7 @@ export default {
   },
   computed: {
     filteredRequests: function () {
-      return this.fetchData.requestedCircles
+      return [...this.fetchData.requestedCircles]
         .sort((a, b) =>
           a.locationString.localeCompare(b.locationString, 'ja', {
             numeric: true
@@ -208,26 +208,20 @@ export default {
               break
           }
           if (this.selectedUsers.length > 0) {
-            let is_only = true
-
             const selectedUserIds = this.selectedUsers.map((user) => user.id)
 
-            for (const item of v.requestedItems) {
-              if (
-                !item.requests.every((request) =>
-                  selectedUserIds.includes(request.userId)
-                )
-              ) {
-                is_only = false
-              }
-            }
+            const isOnly = v.requestedItems.every((item) =>
+              item.requests.every((request) =>
+                selectedUserIds.includes(request.userId)
+              )
+            )
 
             if (this.filter.user === 'only') {
-              if (!is_only) {
+              if (!isOnly) {
                 ok = false
               }
             } else if (this.filter.user === 'exclude') {
-              if (is_only) {
+              if (isOnly) {
                 ok = false
               }
             }
