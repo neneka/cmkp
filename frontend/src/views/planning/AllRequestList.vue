@@ -12,19 +12,23 @@ v-container(fluid, grid-list-md)
     v-flex
       v-checkbox(label="シャッター", v-model="filter.shutter")
     v-flex
-      v-checkbox(label="ユーザー限定", v-model="filter.only")
-    v-flex
-      v-checkbox(label="ユーザー除外", v-model="filter.exclude")
-    v-flex(xs12, sm12, v-if="filter.exclude || filter.only")
+      v-radio-group(v-model="filter.user", label="ユーザー絞り込み")
+        v-radio(label="なし", value="none")
+        v-radio(label="限定", value="only")
+        v-radio(label="除外", value="exclude")
+    v-flex(xs12, sm12)
       v-select(
         label="ユーザー",
         :items="fetchUsers.users",
-        v-model="selectedUser",
+        v-model="selectedUsers",
         item-text="displayName",
         item-id="id",
         persistent-hint,
         return-object,
-        single-line
+        single-line,
+        multiple,
+        chips,
+        v-if="filter.user !== 'none'"
       )
     v-flex(xs12, sm12)
       v-autocomplete(
@@ -159,10 +163,9 @@ export default {
         normal: true,
         wall: true,
         shutter: true,
-        exclude: false,
-        only: false
+        user: 'none'
       },
-      selectedUser: null,
+      selectedUsers: [],
       jumpSelectedCircle: null
     }
   },
@@ -204,22 +207,26 @@ export default {
               ok = this.filter.shutter
               break
           }
-          if (this.selectedUser) {
+          if (this.selectedUsers.length > 0) {
             let is_only = true
+
+            const selectedUserIds = this.selectedUsers.map((user) => user.id)
+
             for (const item of v.requestedItems) {
-              for (const request of item.requests) {
-                if (request.userId !== this.selectedUser.id) {
-                  is_only = false
-                }
+              if (
+                !item.requests.every((request) =>
+                  selectedUserIds.includes(request.userId)
+                )
+              ) {
+                is_only = false
               }
             }
-            if (this.filter.only) {
-              this.filter.exclude = false
+
+            if (this.filter.user === 'only') {
               if (!is_only) {
                 ok = false
               }
-            } else if (this.filter.exclude) {
-              this.filter.only = false
+            } else if (this.filter.user === 'exclude') {
               if (is_only) {
                 ok = false
               }
