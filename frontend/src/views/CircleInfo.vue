@@ -31,6 +31,21 @@
                     v-btn(flat @click.stop="dialog = false; newMemo = ''") キャンセル
                     v-btn(flat :disabled="!dialogValid || sending" :loading="sending" @click="createMemo") 作成
     v-btn(block color="success" :disabled="isDeadlineOver" :to="`/my-requests/create/${cid}`") リクエストを作成 {{ isDeadlineOver ? '(締め切りました)' : '' }}
+    v-card
+      v-list(three-line)
+        v-list-tile(v-for="item in fetchData.circle.requestedItems", :key="item.id")
+          v-list-tile-content
+            v-list-tile-title {{ item.name }}
+            v-list-tile-sub-title {{ priceString(item.price) }} × 計{{ requestedNum(item.requests) }}個
+            v-list-tile-sub-title
+              span(
+                v-for="(request, idx) in item.requests",
+                :key="request.id"
+              )
+                span
+                  router-link(:to="`/planning/users/${request.userId}`") {{ request.user.displayName }}
+                  | ({{ request.num }})
+                template(v-if="idx !== item.requests.length - 1") ,&nbsp;
 </template>
 
 <script>
@@ -55,6 +70,26 @@ const getData = gql`
       twitterId
       niconicoId
       website
+      prioritized {
+        userId
+        user {
+          displayName
+        }
+        rank
+      }
+      requestedItems {
+        id
+        name
+        price
+        requests {
+          id
+          userId
+          user {
+            displayName
+          }
+          num
+        }
+      }
     }
     circleMemos(circleId: $cid) {
       id
@@ -139,6 +174,8 @@ export default {
     }
   },
   methods: {
+    priceString: (p) => (p >= 0 ? `${p}円` : '価格未登録'),
+    requestedNum: (requests) => requests.reduce((x, y) => x + y.num, 0),
     async createMemo () {
       this.sending = true
       try {
